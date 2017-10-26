@@ -4,9 +4,7 @@ import com.example.security.entities.AppUserEntity;
 import com.example.security.entities.MinimalUser;
 import com.example.security.repositories.AppUserRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,5 +28,12 @@ public class AdminController {
             minimalUsers.add(new MinimalUser(appUserEntity));
         }
         return minimalUsers;
+    }
+
+    @PostMapping(value = "/deletemultiple")
+    @PreAuthorize(value = "hasAuthority('ADMIN')")
+    public List<String> deleteUsers(@RequestBody final List<String> ids) {
+        ids.forEach(id -> appUserRepository.deleteById(id));
+        return ids;
     }
 }

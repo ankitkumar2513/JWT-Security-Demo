@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface AppUserRepository extends MongoRepository<AppUserEntity, String> {
 
     AppUserEntity findFirstByUsername(String username);
+
+    void deleteAllByUsername(String username);
 }
